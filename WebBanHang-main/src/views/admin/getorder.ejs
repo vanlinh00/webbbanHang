@@ -1,0 +1,79 @@
+<% extend("../mainadmin.ejs") %>
+
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">TỔNG ĐƠN HÀNG</h3>
+            </div>
+
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>HỌ VÀ TÊN</th>
+                    <th>SỐ ĐIỆN THOẠI</th>
+                    <th>ĐỊA CHỈ</th>
+                    <th>GIÁ TRỊ</th>
+                    <th>NGÀY GIAO HÀNG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(alldataorder.length!=0){ var i=1; alldataorder.forEach(function(data){ %>
+                    <tr>
+                      <td>
+                        <%=i%>
+                      </td>
+                      <td>
+                        <%=data.user_name %>
+                      </td>
+
+                      <td>
+                        <%=data.user_phone %>
+                      </td>
+                      <td>
+                        <%=data.user_address %>
+                      </td>
+                      <td>
+                        <%=data.totalPrice %>
+                      </td>
+                      <td>
+                        <%=data.ngaygiaodang%>
+                      </td>
+
+                      <td>
+                        <a href="/inforuser?id=<%=data.id%>" class="edit" title="Edit" data-toggle="tooltip"><i
+                            class="material-icons"></i>xem thông tin</a>
+
+                      </td>
+
+
+                    </tr>
+                    <% i++; }) %>
+                      <% } else{ %>
+                        <tr>
+                          <td colspan="8">No Data Found</td>
+                        </tr>
+                        <% } %>
+
+                </tbody>
+                </tbody>
+
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
