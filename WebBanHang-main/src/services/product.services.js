@@ -109,11 +109,44 @@ let getpriceitemincart = (listidproduct) => {
         }
     }));
 };
+let deleteProduct = (id_product) => {
+    return new Promise((async (resolve, reject) => {
+        try {
+            let product = await Productmodel.deleteProduct(id_product);
+            if (product.affectedRows == 1) {
+                resolve(true);
+            }
+            else {
+                resolve(null);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    }));
+};
+
+let deleteOrder = (id_product) => {
+    return new Promise((async (resolve, reject) => {
+        try {
+            let product = await Productmodel.deleteOrder(id_product);
+            if (product.affectedRows == 1) {
+                resolve(true);
+            }
+            else {
+                resolve(null);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    }));
+};
 module.exports = {
     getallitem: getallitem,
     CheckCreatecartuser: CheckCreatecartuser,
     checkproductbyid:checkproductbyid,
     checklishidincart:checklishidincart,
     getpriceitemincart:getpriceitemincart,
+    deleteProduct:deleteProduct,
+    deleteOrder:deleteOrder,
 
 }

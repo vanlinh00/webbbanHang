@@ -5,7 +5,7 @@ const idprucductsingle = [];
 
 let gettrangchu = async (req, res) => {
     let allproduct = await Productservice.getallitem();
-    return res.render('user/home.ejs', { allproduct: allproduct });
+    return res.render('user/home', { allproduct: allproduct });
 }
 
 let posttrangchu = async (req, res) => {
@@ -62,6 +62,11 @@ let getorder = async (req, res) => {
     const meesstransition = req.flash('messtransition');
     res.render('user/order', { meesstransition: meesstransition })
 }
+let getmen = async (req, res) => {
+    let allproduct = await Productservice.getallitem();
+    return res.render('user/home', { allproduct: allproduct });
+
+}
 let transaction = async (req, res) => {
     var price = await Productservice.getpriceitemincart(listiditemincart);
     let date_ob = new Date();
@@ -82,19 +87,27 @@ let transaction = async (req, res) => {
         ngaygiaodang: year + "-" + month + "-" + date,
     }
 
-
-    var data = transactionservices.CreateTransaction(transaction);
-    if (data.length != 0) {
-        req.flash('messtransition', "Thành công xin mời bạn tiếp tục mua hàng");
-        listiditemincart.length = 0;
-        res.redirect("/order");
-        console.log(req.body.user_phone);
+    if (req.body.user_name == "" || req.body.user_email == "" || req.body.user_phone == "" || req.body.user_address == "" ) {
+        req.flash('messtransition', "Thất bại xin vui lòng điền đủ thông tin");
+    }
+    else if(listiditemincart == "")
+    {
+        req.flash('messtransition', "Chưa có sản phẩm nào trong rỏ hàng");
     }
     else {
-        req.flash('messtransition', "Thất bại xin vui lòng thử lại");
-        res.redirect("/order");
+        var data = transactionservices.CreateTransaction(transaction);
+        if (data.length != 0) {
+            req.flash('messtransition', "Thành công xin mời bạn tiếp tục mua hàng");
+            listiditemincart.length = 0;
+         
+            console.log(req.body.user_phone);
+        }
+        else {
+            req.flash('messtransition', "Thất bại xin vui lòng thử lại");
+            
+        }
     }
-
+    res.redirect("/order");
 }
 module.exports = {
     gettrangchu: gettrangchu,
@@ -105,4 +118,5 @@ module.exports = {
     postcheckout: postcheckout,
     getorder: getorder,
     transaction: transaction,
+    getmen: getmen,
 }

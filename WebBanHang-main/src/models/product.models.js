@@ -95,5 +95,37 @@ product.checkidproduct= function (idproduct) {
         }
     }));
 }
+product.deleteProduct = (id) => {
 
+    return new Promise((async (resolve, reject) => {
+        try {
+            db.query(`DELETE FROM product WHERE id = '${id}'`, (err, res) => {
+                if (err) {
+                    Error.code1001(res);
+                } else {
+                    resolve(res);
+                }
+            })
+        } catch (e) {
+            reject(e);
+        }
+    }));
+};
+
+product.deleteOrder = (id) => {
+
+    return new Promise((async (resolve, reject) => {
+        try {
+            db.query(`DELETE FROM transaction WHERE id = '${id}'`, (err, res) => {
+                if (err) {
+                    Error.code1001(res);
+                } else {
+                    resolve(res);
+                }
+            })
+        } catch (e) {
+            reject(e);
+        }
+    }));
+};
 module.exports = product;
